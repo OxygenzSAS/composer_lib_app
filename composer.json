@@ -1,0 +1,30 @@
+{
+    "name": "oxygenzsas/composer_lib_app",
+    "description": "Classe de demarrage de mon framework",
+    "license": "MIT",
+    "keywords": ["framework"],
+    "authors": [
+        {
+            "name": "nvanhaezebrouck",
+            "email": "nicolas@oxygenz.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "OxygenzSAS\\Framework\\" : "src/"
+        }
+    },
+    "require": {
+        "oxygenzsas/composer_lib_router": "^0.2",
+        "oxygenzsas/composer_lib_config": "^0.2",
+        "oxygenzsas/composer_lib_container": "^0.1"
+    },
+    "scripts": {
+        "migration": [
+            "@php bin/migration.php"
+        ]
+    },
+    "scripts-descriptions": {
+        "migration": "Database Migration system"
+    }
+}
