@@ -82,8 +82,8 @@ abstract class Worker
 
     public function add($payload) {
         $jobQueue = $this->getJobQueue();
-        $Job_Queue->selectPipeline($this->getTagIdentifier());
-        $Job_Queue->addJob(json_encode($payload));
+        $jobQueue->selectPipeline($this->getTagIdentifier());
+        $jobQueue->addJob(json_encode($payload));
     }
 
     abstract public function getTagIdentifier() :string ;
