@@ -84,6 +84,11 @@ abstract class App {
         
         // initialise le container
         Container::getInstance($path.'/config/container.php');
+
+        // initialise la config des workers
+        if(file_exists($path.'/config/worker.php')){
+            WorkerConfig::getInstance($path.'/config/worker.php');
+        }
     }
 
     /**

@@ -23,8 +23,12 @@
         "migration": [
             "@php bin/migration.php"
         ]
+        ,"supervisor": [
+            "@php bin/supervisor.php"
+        ]
     },
     "scripts-descriptions": {
         "migration": "Database Migration system"
+        ,"supervisor": "Supervise les workers"
     }
 }
