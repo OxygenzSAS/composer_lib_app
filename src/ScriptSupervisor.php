@@ -4,7 +4,7 @@ namespace OxygenzSAS\Framework;
 
 class ScriptSupervisor {
 
-    private Worker $worker;
+    private Worker|Automate $worker;
     private static $phpPath = '';
     private static $lockPath = '';
 
@@ -17,6 +17,10 @@ class ScriptSupervisor {
     }
     public static function setLockPath($path){
         self::$lockPath = $path;
+    }
+
+    public static function getLockPath(){
+        return self::$lockPath;
     }
 
     public static function superviseWorkers($workers) {
@@ -46,7 +50,7 @@ class ScriptSupervisor {
 
             foreach ($output as $line) {
                 if (stripos($line, $pidLock) !== false) {
-                    echo $this->worker->getTagIdentifier().' already running with PID = '.$pidLock;
+                    echo $this->worker->getTagIdentifier().' already running with PID = '.$pidLock.PHP_EOL;
                     return true;
                 }
             }
@@ -63,7 +67,7 @@ class ScriptSupervisor {
             // Recherchez le nom du worker dans la sortie de "ps".
             foreach ($output as $line) {
                 if (stripos($line, $pidLock) !== false) {
-                    echo $this->worker->getTagIdentifier().' already running with PID = '.$pidLock;
+                    echo $this->worker->getTagIdentifier().' already running with PID = '.$pidLock.PHP_EOL;
                     return true;
                 }
             }
@@ -89,7 +93,7 @@ class ScriptSupervisor {
         $lockFile = self::getLockFile($this->worker->getTagIdentifier());
         @unlink($lockFile);
 
-        echo 'start '.$this->worker->getTagIdentifier().' ...';
+        echo 'start '.$this->worker->getTagIdentifier().' ...'.PHP_EOL;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $command = self::$phpPath.' '.realpath($_SERVER['SCRIPT_NAME']). " action=start worker=".$this->worker->getTagIdentifier();
             pclose(popen('start /B cmd /C "'.$command.' >NUL 2>NUL"', 'r'));
@@ -109,7 +113,7 @@ class ScriptSupervisor {
             return false;
         }
 
-        echo 'kill '.$this->worker->getTagIdentifier().' ...';
+        echo 'kill '.$this->worker->getTagIdentifier().' ...'.PHP_EOL;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $command = "taskkill.exe /F /PID ".$pidLock;
             pclose(popen('start /B cmd /C "'.$command.' >NUL 2>NUL"', 'r'));
