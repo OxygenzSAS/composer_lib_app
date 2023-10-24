@@ -33,7 +33,7 @@ abstract class Worker
         }
 
         $PDO = new \PDO($dsn, $config['db_user'], $config['db_pass']);
-        $this->job_queue = new JobQueue('mysql');
+        $this->job_queue = new JobQueue('mysql', ['mysql' => ['use_compression' => false]]);
         $this->job_queue->addQueueConnection($PDO);
         return $this->job_queue;
     }
