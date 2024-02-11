@@ -115,7 +115,7 @@ class ScriptSupervisor {
 
         echo 'kill '.$this->worker->getTagIdentifier().' ...'.PHP_EOL;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $command = "taskkill.exe /F /PID ".$pidLock;
+            $command = "taskkill.exe /T /F /PID ".$pidLock;
             pclose(popen('start /B cmd /C "'.$command.' >NUL 2>NUL"', 'r'));
         } else {
             $command = "kill -9 ".$pidLock;
