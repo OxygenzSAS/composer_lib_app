@@ -37,6 +37,14 @@ abstract class App {
         self::$header[$key] = $value;
     }
 
+    private static function showErrorInit($message, \Throwable $e = null) {
+        echo '<h1>Erreur 500 : Une erreur interne est survenue</h1>';
+        echo $message;
+        echo '<br/>';
+        echo '<pre>'.print_r($e, true).'</pre>';
+        die();
+    }
+
     /**
      * @throws \Exception
      */
@@ -75,19 +83,35 @@ abstract class App {
 
         // on convertit les erreurs php en exception
         self::AllErrorToException();
-        
+                
         // initialise le singleton de configuration
-        Config::getInstance($path.'/config/config.php');
+        try {
+            Config::getInstance($path.'/config/config.php');
+        }catch (\Throwable $e) {
+            self::showErrorInit(message: 'Impossible de charger le fichier de configuration config/config.php.', e: $e);
+        }
 
         // parser les plugins
-        Plugin::getInstance($path.'/config/plugin.php');
-        
+        try {
+            Plugin::getInstance($path.'/config/plugin.php');
+        }catch (\Throwable $e) {
+           self::showErrorInit(message: 'Impossible de charger le fichier de configuration config/plugin.php.', e: $e);
+        }
+
         // initialise le container
-        Container::getInstance($path.'/config/container.php');
+        try {
+           Container::getInstance($path.'/config/container.php');
+        }catch (\Throwable $e) {
+            self::showErrorInit(message: 'Impossible de charger le fichier de configuration config/container.php.', e: $e);
+        }
 
         // initialise la config des workers
         if(file_exists($path.'/config/worker.php')){
-            WorkerConfig::getInstance($path.'/config/worker.php');
+            try {
+                WorkerConfig::getInstance($path.'/config/worker.php');
+            }catch (\Throwable $e) {
+                self::showErrorInit(message: 'Impossible de charger le fichier de configuration config/worker.php.', e: $e);
+            }
         }
     }
 
