@@ -62,7 +62,7 @@ class ScriptSupervisor {
         // Si vous êtes sur Linux, utilisez la commande "ps" pour vérifier les processus.
         else {
             // Exécutez la commande "ps" pour obtenir la liste des processus.
-            exec("ps aux | grep -e php", $output);
+            exec("ps aux | grep -e php | awk '{print $2}' | grep -x ".$pidLock, $output);
 
             // Recherchez le nom du worker dans la sortie de "ps".
             foreach ($output as $line) {
