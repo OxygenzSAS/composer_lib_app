@@ -37,7 +37,7 @@ abstract class App {
         self::$header[$key] = $value;
     }
 
-    private static function showErrorInit($message, \Throwable $e = null) {
+    private static function showErrorInit($message, \Throwable|null $e = null) {
         echo '<h1>Erreur 500 : Une erreur interne est survenue</h1>';
         echo $message;
         echo '<br/>';

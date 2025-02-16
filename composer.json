@@ -18,7 +18,8 @@
         "oxygenzsas/composer_lib_router": "^0.2",
         "oxygenzsas/composer_lib_config": "^0.2",
         "oxygenzsas/composer_lib_container": "^0.1",
-        "dragonmantank/cron-expression": "^3.3"
+        "dragonmantank/cron-expression": "^3.3",
+        "php": ">=8.1"
     },
     "scripts": {
         "migration": [
